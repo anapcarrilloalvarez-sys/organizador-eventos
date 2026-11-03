@@ -353,16 +353,16 @@ avance <= 70 ? '🟡' :
 '🟢'} ${avance}%
 </td>
 
-<td>${e.documentos?.catering ? '✅' : '⬜'}</td>
-<td>${e.documentos?.ee ? '✅' : '⬜'}</td>
-<td>${e.documentos?.cv ? '✅' : '⬜'}</td>
-<td>${e.documentos?.coi ? '✅' : '⬜'}</td>
-<td>${e.documentos?.aprobacion ? '✅' : '⬜'}</td>
+<td><input type="checkbox" ${e.documentos?.catering ? 'checked' : ''} onclick="toggleDocumento(${index},'catering')"></td>
+<td><input type="checkbox" ${e.documentos?.ee ? 'checked' : ''} onclick="toggleDocumento(${index},'ee')"></td>
+<td><input type="checkbox" ${e.documentos?.cv ? 'checked' : ''} onclick="toggleDocumento(${index},'cv')"></td>
+<td><input type="checkbox" ${e.documentos?.coi ? 'checked' : ''} onclick="toggleDocumento(${index},'coi')"></td>
+<td><input type="checkbox" ${e.documentos?.aprobacion ? 'checked' : ''} onclick="toggleDocumento(${index},'aprobacion')"></td>
 
-<td>${e.documentos?.contrato ? '✅' : '⬜'}</td>
-<td>${e.documentos?.po ? '✅' : '⬜'}</td>
-<td>${e.documentos?.briefing ? '✅' : '⬜'}</td>
-<td>${e.documentos?.ppt ? '✅' : '⬜'}</td>
+<td><input type="checkbox" ${e.documentos?.contrato ? 'checked' : ''} onclick="toggleDocumento(${index},'contrato')"></td>
+<td><input type="checkbox" ${e.documentos?.po ? 'checked' : ''} onclick="toggleDocumento(${index},'po')"></td>
+<td><input type="checkbox" ${e.documentos?.briefing ? 'checked' : ''} onclick="toggleDocumento(${index},'briefing')"></td>
+<td><input type="checkbox" ${e.documentos?.ppt ? 'checked' : ''} onclick="toggleDocumento(${index},'ppt')"></td>
 
 <td>${e.email}</td>
 `;
