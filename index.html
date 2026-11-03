@@ -272,7 +272,26 @@ localStorage.setItem(
 JSON.stringify(eventos)
 );
 }
+function calcularAvance(evento){
 
+let docs = evento.documentos;
+
+if(!docs){
+return 0;
+}
+
+let total =
+Object.keys(docs).length;
+
+let completos =
+Object.values(docs)
+.filter(v => v).length;
+
+return Math.round(
+(completos/total)*100
+);
+
+}
 function actualizarDashboard(){
 
 document.getElementById("totalEventos").innerText =
