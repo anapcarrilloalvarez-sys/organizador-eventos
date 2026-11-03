@@ -1,17 +1,454 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Organizador de Eventos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizador de Eventos</title>
+
+<style>
+body{
+font-family:Segoe UI,sans-serif;
+margin:0;
+background:#f4f6f9;
+}
+
+header{
+background:#2563eb;
+color:white;
+padding:20px;
+}
+
+.container{
+padding:20px;
+}
+
+nav button{
+padding:10px 15px;
+margin-right:8px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.active{
+background:#2563eb;
+color:white;
+}
+
+.panel{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.hidden{
+display:none;
+}
+
+.create-btn{
+background:#16a34a;
+color:white;
+padding:10px 15px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+margin-bottom:15px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:13px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:6px;
+text-align:center;
+}
+
+th{
+background:#f8fafc;
+}
+
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:6px;
+margin-top:20px;
+}
+
+.day{
+background:white;
+border:1px solid #ddd;
+min-height:120px;
+padding:5px;
+}
+
+.event{
+font-size:11px;
+padding:3px;
+margin-top:2px;
+border-radius:4px;
+}
+
+.gdm{
+background:#bbf7d0;
+}
+
+.fs{
+background:#fed7aa;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-bottom:20px;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:8px;
+text-align:center;
+}
+
+input,select{
+width:100%;
+padding:8px;
+margin-bottom:10px;
+}
+
+#modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+align-items:center;
+justify-content:center;
+}
+
+.modal-content{
+background:white;
+padding:20px;
+width:500px;
+max-width:90%;
+border-radius:10px;
+}
+
+.save-btn{
+background:#2563eb;
+color:white;
+padding:10px;
+border:none;
+width:100%;
+}
+</style>
 </head>
+
 <body>
 
-<h1> Organizador de Eventos </h1>
+<header>
+<h1>🎉 Organizador de Eventos GDM / FS</h1>
+</header>
 
-<p>Versión inicial de la aplicación.</p>
+<div class="container">
 
-<button onclick="alert('¡Funciona!')">
-    Probar aplicación
+<div class="stats">
+<div class="card">
+<h2 id="totalEventos">0</h2>
+Eventos
+</div>
+
+<div class="card">
+<h2 id="totalGDM">0</h2>
+GDM
+</div>
+
+<div class="card">
+<h2 id="totalFS">0</h2>
+FS
+</div>
+
+<div class="card">
+<h2 id="cumplimiento">0%</h2>
+Cumplimiento
+</div>
+</div>
+
+<nav>
+<button id="btnCalendario" class="active">
+Calendario
 </button>
+
+<button id="btnEventos">
+Detalle de Eventos
+</button>
+</nav>
+
+<br>
+
+<div id="calendarioPanel" class="panel">
+
+<select id="filtroTipo">
+<option value="Todos">Todos</option>
+<option value="GDM">GDM</option>
+<option value="FS">FS</option>
+</select>
+
+<div class="calendar" id="calendar"></div>
+
+</div>
+
+<div id="eventosPanel" class="panel hidden">
+
+<button class="create-btn" onclick="abrirModal()">
++ Create
+</button>
+
+<table>
+<thead>
+<tr>
+<th>Código</th>
+<th>Nombre</th>
+<th>Fecha</th>
+<th>Clasificación</th>
+<th>Speaker</th>
+<th>SAR</th>
+<th>Email</th>
+</tr>
+</thead>
+
+<tbody id="tablaEventos"></tbody>
+</table>
+
+</div>
+
+</div>
+
+<div id="modal">
+
+<div class="modal-content">
+
+<h3>Nuevo Evento</h3>
+
+<input id="codigo" placeholder="Código">
+
+<input id="nombre" placeholder="Nombre">
+
+<input id="fecha" type="date">
+
+<select id="tipo">
+<option>GDM</option>
+<option>FS</option>
+</select>
+
+<input id="speaker" placeholder="Speaker">
+
+<input id="sar" placeholder="SAR Responsable">
+
+<input id="email" placeholder="Email">
+
+<button class="save-btn" onclick="guardarEvento()">
+Guardar Evento
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let eventos = JSON.parse(
+localStorage.getItem("eventosAna")
+|| "[]"
+);
+
+function guardarLocal(){
+localStorage.setItem(
+"eventosAna",
+JSON.stringify(eventos)
+);
+}
+
+function actualizarDashboard(){
+
+document.getElementById("totalEventos").innerText =
+eventos.length;
+
+document.getElementById("totalGDM").innerText =
+eventos.filter(e=>e.tipo==="GDM").length;
+
+document.getElementById("totalFS").innerText =
+eventos.filter(e=>e.tipo==="FS").length;
+
+document.getElementById("cumplimiento").innerText =
+eventos.length ? "100%" : "0%";
+}
+
+function renderTabla(){
+
+let html="";
+
+eventos.forEach(e=>{
+
+html += `
+<tr>
+<td>${e.codigo}</td>
+<td>${e.nombre}</td>
+<td>${e.fecha}</td>
+<td>${e.tipo}</td>
+<td>${e.speaker}</td>
+<td>${e.sar}</td>
+<td>${e.email}</td>
+</tr>
+`;
+
+});
+
+document.getElementById("tablaEventos").innerHTML =
+html;
+}
+
+function renderCalendario(){
+
+let filtro=
+document.getElementById("filtroTipo").value;
+
+const calendario=
+document.getElementById("calendar");
+
+calendario.innerHTML="";
+
+for(let dia=1;dia<=35;dia++){
+
+let box=document.createElement("div");
+
+box.className="day";
+
+box.innerHTML="<strong>"+dia+"</strong>";
+
+eventos
+.filter(ev=>{
+
+let coincide=
+new Date(ev.fecha).getDate()===dia;
+
+let filtroOK=
+filtro==="Todos"
+|| filtro===ev.tipo;
+
+return coincide && filtroOK;
+
+})
+.forEach(ev=>{
+
+let div=document.createElement("div");
+
+div.className=
+"event "+
+ev.tipo.toLowerCase();
+
+div.innerText=
+ev.codigo+
+" - "+
+ev.nombre;
+
+box.appendChild(div);
+
+});
+
+calendario.appendChild(box);
+}
+}
+
+function abrirModal(){
+
+document.getElementById("modal")
+.style.display="flex";
+
+}
+
+function guardarEvento(){
+
+let tipo=
+document.getElementById("tipo").value;
+
+eventos.push({
+
+codigo:
+document.getElementById("codigo").value,
+
+nombre:
+document.getElementById("nombre").value,
+
+fecha:
+document.getElementById("fecha").value,
+
+tipo,
+
+speaker:
+tipo==="FS"
+? ""
+: document.getElementById("speaker").value,
+
+sar:
+document.getElementById("sar").value,
+
+email:
+document.getElementById("email").value
+
+});
+
+guardarLocal();
+
+document.getElementById("modal")
+.style.display="none";
+
+renderTabla();
+renderCalendario();
+actualizarDashboard();
+}
+
+document.getElementById(
+"btnCalendario"
+).onclick=()=>{
+
+document
+.getElementById("calendarioPanel")
+.classList.remove("hidden");
+
+document
+.getElementById("eventosPanel")
+.classList.add("hidden");
+
+};
+
+document.getElementById(
+"btnEventos"
+).onclick=()=>{
+
+document
+.getElementById("eventosPanel")
+.classList.remove("hidden");
+
+document
+.getElementById("calendarioPanel")
+.classList.add("hidden");
+
+};
+
+document
+.getElementById("filtroTipo")
+.onchange=renderCalendario;
+
+renderTabla();
+renderCalendario();
+actualizarDashboard();
+
+</script>
 
 </body>
 </html>
