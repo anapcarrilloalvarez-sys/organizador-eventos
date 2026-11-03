@@ -564,7 +564,22 @@ document
 .classList.add("hidden");
 
 };
+function toggleDocumento(index,campo){
 
+if(!eventos[index].documentos){
+return;
+}
+
+eventos[index].documentos[campo] =
+!eventos[index].documentos[campo];
+
+guardarLocal();
+
+renderTabla();
+renderCalendario();
+actualizarDashboard();
+
+}
 document
 .getElementById("filtroTipo")
 .onchange=renderCalendario;
