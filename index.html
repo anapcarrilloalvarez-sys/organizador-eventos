@@ -326,7 +326,15 @@ html += `
 <td>${e.speaker}</td>
 <td>${e.sar}</td>
 <td>${avance}%</td>
-<td><button>Checklist</button></td>
+<td>
+
+<button onclick="editarChecklist(${index})">
+
+Checklist
+
+</button>
+
+</td>
 <td>${e.email}</td>
 </tr>
 `;
