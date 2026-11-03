@@ -459,7 +459,56 @@ renderTabla();
 renderCalendario();
 actualizarDashboard();
 }
+function editarChecklist(index){
 
+let e = eventos[index];
+
+if(!e.documentos){
+
+alert(
+"Este evento fue creado antes de la versión checklist."
+);
+
+return;
+
+}
+
+e.documentos.catering =
+confirm("¿Cotización Catering completada?");
+
+e.documentos.ee =
+confirm("¿EE Request completado?");
+
+e.documentos.cv =
+confirm("¿CV completado?");
+
+e.documentos.coi =
+confirm("¿COI completado?");
+
+e.documentos.aprobacion =
+confirm("¿Enviado a aprobación?");
+
+if(e.tipo !== "FS"){
+
+e.documentos.contrato =
+confirm("¿Contrato EE?");
+
+e.documentos.po =
+confirm("¿PO EE?");
+
+e.documentos.briefing =
+confirm("¿Briefing EE?");
+
+e.documentos.ppt =
+confirm("¿PPT EE?");
+
+}
+
+guardarLocal();
+
+renderTabla();
+
+}
 document.getElementById(
 "btnCalendario"
 ).onclick=()=>{
