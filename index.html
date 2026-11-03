@@ -217,6 +217,8 @@ Detalle de Eventos
 <th>Clasificación</th>
 <th>Speaker</th>
 <th>SAR</th>
+<th>% Avance</th>
+<th>Checklist</th>
 <th>Email</th>
 </tr>
 </thead>
@@ -311,7 +313,9 @@ function renderTabla(){
 
 let html="";
 
-eventos.forEach(e=>{
+eventos.forEach((e,index)=>{
+
+let avance = calcularAvance(e);
 
 html += `
 <tr>
@@ -321,6 +325,8 @@ html += `
 <td>${e.tipo}</td>
 <td>${e.speaker}</td>
 <td>${e.sar}</td>
+<td>${avance}%</td>
+<td><button>Checklist</button></td>
 <td>${e.email}</td>
 </tr>
 `;
