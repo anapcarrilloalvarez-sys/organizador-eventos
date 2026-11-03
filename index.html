@@ -336,7 +336,19 @@ let html="";
 
 eventos.forEach((e,index)=>{
 
-let avance = calcularAvance(e);
+let docs = e.documentos || {};
+
+let total = Object.keys(docs).length;
+
+let completos =
+Object.values(docs)
+.filter(v => v === true)
+.length;
+
+let avance =
+total > 0
+? Math.round((completos/total)*100)
+: 0;
 
 html += `
 <tr>
