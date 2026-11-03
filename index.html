@@ -218,7 +218,6 @@ Detalle de Eventos
 <th>Speaker</th>
 <th>SAR</th>
 <th>% Avance</th>
-<th>Checklist</th>
 <th>Email</th>
 </tr>
 </thead>
@@ -325,18 +324,8 @@ html += `
 <td>${e.tipo}</td>
 <td>${e.speaker}</td>
 <td>${e.sar}</td>
-<td>${avance}%</td>
-<td>
-
-<button onclick="editarChecklist(${index})">
-
-Checklist
-
-</button>
-
-</td>
+<td>${avance <= 30 ? '🔴' : avance <= 70 ? '🟡' : '🟢'} ${avance}%</td>
 <td>${e.email}</td>
-</tr>
 `;
 
 });
