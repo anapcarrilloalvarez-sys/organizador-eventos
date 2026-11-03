@@ -211,14 +211,36 @@ Detalle de Eventos
 <table>
 <thead>
 <tr>
-<th>Código</th>
-<th>Nombre</th>
-<th>Fecha</th>
-<th>Clasificación</th>
-<th>Speaker</th>
-<th>SAR</th>
-<th>% Avance</th>
-<th>Email</th>
+<th rowspan="2">Código</th>
+<th rowspan="2">Nombre</th>
+<th rowspan="2">Fecha</th>
+<th rowspan="2">Clasificación</th>
+<th rowspan="2">Speaker</th>
+<th rowspan="2">SAR Responsable</th>
+<th rowspan="2">Avance</th>
+
+<th colspan="5" style="background:#dbeafe">
+Documentos para aprobación
+</th>
+
+<th colspan="4" style="background:#dcfce7">
+Documentación antes del evento
+</th>
+
+<th rowspan="2">Email</th>
+</tr>
+
+<tr>
+<th style="background:#dbeafe">Catering</th>
+<th style="background:#dbeafe">EE Request</th>
+<th style="background:#dbeafe">CV</th>
+<th style="background:#dbeafe">COI</th>
+<th style="background:#dbeafe">Aprobación</th>
+
+<th style="background:#dcfce7">Contrato</th>
+<th style="background:#dcfce7">PO</th>
+<th style="background:#dcfce7">Briefing</th>
+<th style="background:#dcfce7">PPT</th>
 </tr>
 </thead>
 
@@ -324,7 +346,24 @@ html += `
 <td>${e.tipo}</td>
 <td>${e.speaker}</td>
 <td>${e.sar}</td>
-<td>${avance <= 30 ? '🔴' : avance <= 70 ? '🟡' : '🟢'} ${avance}%</td>
+
+<td>
+${avance <= 30 ? '🔴' :
+avance <= 70 ? '🟡' :
+'🟢'} ${avance}%
+</td>
+
+<td>${e.documentos?.catering ? '✅' : '⬜'}</td>
+<td>${e.documentos?.ee ? '✅' : '⬜'}</td>
+<td>${e.documentos?.cv ? '✅' : '⬜'}</td>
+<td>${e.documentos?.coi ? '✅' : '⬜'}</td>
+<td>${e.documentos?.aprobacion ? '✅' : '⬜'}</td>
+
+<td>${e.documentos?.contrato ? '✅' : '⬜'}</td>
+<td>${e.documentos?.po ? '✅' : '⬜'}</td>
+<td>${e.documentos?.briefing ? '✅' : '⬜'}</td>
+<td>${e.documentos?.ppt ? '✅' : '⬜'}</td>
+
 <td>${e.email}</td>
 `;
 
