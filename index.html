@@ -228,6 +228,7 @@ Documentación antes del evento
 </th>
 
 <th rowspan="2">Email</th>
+<th rowspan="2">Acciones</th>
 </tr>
 
 <tr>
@@ -377,6 +378,21 @@ avance <= 70 ? '🟡' :
 <td><input type="checkbox" ${e.documentos?.ppt ? 'checked' : ''} onclick="toggleDocumento(${index},'ppt')"></td>
 
 <td>${e.email}</td>
+
+<td>
+<button
+onclick="eliminarEvento(${index})"
+style="
+background:#dc2626;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:6px;
+cursor:pointer;
+">
+🗑️
+</button>
+</td>
 `;
 
 });
@@ -584,6 +600,21 @@ return;
 
 eventos[index].documentos[campo] =
 !eventos[index].documentos[campo];
+
+guardarLocal();
+
+renderTabla();
+renderCalendario();
+actualizarDashboard();
+
+}
+function eliminarEvento(index){
+
+if(!confirm("¿Eliminar este evento?")){
+return;
+}
+
+eventos.splice(index,1);
 
 guardarLocal();
 
