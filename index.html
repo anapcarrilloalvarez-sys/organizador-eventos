@@ -213,7 +213,9 @@ Detalle de Eventos
 <tr>
 <th rowspan="2">Código</th>
 <th rowspan="2">Nombre</th>
-<th rowspan="2">Fecha</th>
+<th rowspan="2" onclick="ordenarFecha()" style="cursor:pointer;">
+Fecha ▲▼
+</th>
 <th rowspan="2">Clasificación</th>
 <th rowspan="2">Speaker</th>
 <th rowspan="2">SAR Responsable</th>
@@ -292,6 +294,7 @@ localStorage.getItem("eventosAna")
 || "[]"
 );
 let eventoEditando = null;
+let ordenFechaAsc = true;
 function guardarLocal(){
 localStorage.setItem(
 "eventosAna",
@@ -338,7 +341,11 @@ function renderTabla(){
 let html="";
 
 eventos
-.sort((a,b) => new Date(a.fecha) - new Date(b.fecha))
+.sort((a,b) =>
+ordenFechaAsc
+? new Date(a.fecha) - new Date(b.fecha)
+: new Date(b.fecha) - new Date(a.fecha)
+)
 .forEach((e,index)=>{
 let docs = e.documentos || {};
 
@@ -646,6 +653,13 @@ document.getElementById("modal")
 .style.display="none";
 
 eventoEditando = null;
+
+}
+function ordenarFecha(){
+
+ordenFechaAsc = !ordenFechaAsc;
+
+renderTabla();
 
 }
 function editarEvento(index){
