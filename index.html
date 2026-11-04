@@ -453,8 +453,14 @@ box.innerHTML="<strong>"+dia+"</strong>";
 eventos
 .filter(ev=>{
 
-let fechaEvento = new Date(ev.fecha);
+let partes = ev.fecha.split("-");
 
+let fechaEvento = new Date(
+partes[0],
+partes[1]-1,
+partes[2]
+);
+  
 let coincide =
 fechaEvento.getDate()===dia &&
 fechaEvento.getMonth()===mesActual &&
