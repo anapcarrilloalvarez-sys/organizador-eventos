@@ -289,17 +289,7 @@ let eventos = JSON.parse(
 localStorage.getItem("eventosAna")
 || "[]"
 );
-if(eventoEditando !== null){
-
-eventos[eventoEditando] = nuevoEvento;
-
-eventoEditando = null;
-
-}else{
-
-eventos.push(nuevoEvento);
-
-}
+let eventoEditando = null;
 function guardarLocal(){
 localStorage.setItem(
 "eventosAna",
@@ -491,7 +481,7 @@ function guardarEvento(){
 let tipo=
 document.getElementById("tipo").value;
 
-eventos.push({
+let nuevoEvento = {
 
 codigo:
 document.getElementById("codigo").value,
@@ -530,8 +520,18 @@ ppt:false
 
 }
 
-});
+};
+if(eventoEditando !== null){
 
+eventos[eventoEditando] = nuevoEvento;
+
+eventoEditando = null;
+
+}else{
+
+eventos.push(nuevoEvento);
+
+}
 guardarLocal();
 
 document.getElementById("modal")
@@ -635,7 +635,7 @@ actualizarDashboard();
 
 }
 function editarEvento(index){
-
+eventoEditando = index;
 let e = eventos[index];
 
 document.getElementById("codigo").value =
