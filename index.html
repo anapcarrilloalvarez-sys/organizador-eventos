@@ -335,8 +335,9 @@ function renderTabla(){
 
 let html="";
 
-eventos.forEach((e,index)=>{
-
+eventos
+.sort((a,b) => new Date(a.fecha) - new Date(b.fecha))
+.forEach((e,index)=>{
 let docs = e.documentos || {};
 
 let total = Object.keys(docs).length;
