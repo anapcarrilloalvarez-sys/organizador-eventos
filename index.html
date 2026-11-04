@@ -380,6 +380,21 @@ avance <= 70 ? '🟡' :
 <td>${e.email}</td>
 
 <td>
+
+<button
+onclick="editarEvento(${index})"
+style="
+background:#2563eb;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:6px;
+cursor:pointer;
+margin-right:4px;
+">
+✏️
+</button>
+
 <button
 onclick="eliminarEvento(${index})"
 style="
@@ -392,6 +407,7 @@ cursor:pointer;
 ">
 🗑️
 </button>
+
 </td>
 `;
 
@@ -606,6 +622,35 @@ guardarLocal();
 renderTabla();
 renderCalendario();
 actualizarDashboard();
+
+}
+function editarEvento(index){
+
+let e = eventos[index];
+
+document.getElementById("codigo").value =
+e.codigo;
+
+document.getElementById("nombre").value =
+e.nombre;
+
+document.getElementById("fecha").value =
+e.fecha;
+
+document.getElementById("tipo").value =
+e.tipo;
+
+document.getElementById("speaker").value =
+e.speaker;
+
+document.getElementById("sar").value =
+e.sar;
+
+document.getElementById("email").value =
+e.email;
+
+document.getElementById("modal")
+.style.display="flex";
 
 }
 function eliminarEvento(index){
