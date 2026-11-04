@@ -289,7 +289,17 @@ let eventos = JSON.parse(
 localStorage.getItem("eventosAna")
 || "[]"
 );
+if(eventoEditando !== null){
 
+eventos[eventoEditando] = nuevoEvento;
+
+eventoEditando = null;
+
+}else{
+
+eventos.push(nuevoEvento);
+
+}
 function guardarLocal(){
 localStorage.setItem(
 "eventosAna",
