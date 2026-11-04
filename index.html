@@ -278,7 +278,9 @@ Documentación antes del evento
 <button class="save-btn" onclick="guardarEvento()">
 Guardar Evento
 </button>
-
+<button class="cancel-btn" onclick="cerrarModal()">
+Cancelar
+</button>
 </div>
 
 </div>
@@ -636,6 +638,14 @@ guardarLocal();
 renderTabla();
 renderCalendario();
 actualizarDashboard();
+
+}
+function cerrarModal(){
+
+document.getElementById("modal")
+.style.display="none";
+
+eventoEditando = null;
 
 }
 function editarEvento(index){
