@@ -295,6 +295,8 @@ localStorage.getItem("eventosAna")
 );
 let eventoEditando = null;
 let ordenFechaAsc = true;
+let mesActual = new Date().getMonth();
+let anioActual = new Date().getFullYear();
 function guardarLocal(){
 localStorage.setItem(
 "eventosAna",
@@ -437,7 +439,10 @@ document.getElementById("calendar");
 
 calendario.innerHTML="";
 
-for(let dia=1;dia<=35;dia++){
+let diasMes =
+new Date(anioActual,mesActual+1,0).getDate();
+
+for(let dia=1;dia<=diasMes;dia++){
 
 let box=document.createElement("div");
 
@@ -448,8 +453,12 @@ box.innerHTML="<strong>"+dia+"</strong>";
 eventos
 .filter(ev=>{
 
-let coincide=
-new Date(ev.fecha).getDate()===dia;
+let fechaEvento = new Date(ev.fecha);
+
+let coincide =
+fechaEvento.getDate()===dia &&
+fechaEvento.getMonth()===mesActual &&
+fechaEvento.getFullYear()===anioActual;
 
 let filtroOK=
 filtro==="Todos"
