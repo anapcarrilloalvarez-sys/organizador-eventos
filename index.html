@@ -218,9 +218,7 @@ Fecha ▲▼
 </th>
 <th rowspan="2">Clasificación</th>
 <th rowspan="2">Speaker</th>
-<th rowspan="2" onclick="filtrarSAR()" style="cursor:pointer;">
-SAR Responsable ▼
-</th>
+<th rowspan="2">SAR Responsable</th>
 <th rowspan="2">Avance</th>
 
 <th colspan="5" style="background:#dbeafe">
@@ -297,7 +295,6 @@ localStorage.getItem("eventosAna")
 );
 let eventoEditando = null;
 let ordenFechaAsc = true;
-let filtroSAR = "Todos";
   
 let mesActual = new Date().getMonth();
 let anioActual = new Date().getFullYear();
@@ -347,13 +344,6 @@ function renderTabla(){
 let html="";
 
 eventos
-
-.filter(e =>
-filtroSAR === "Todos"
-||
-e.sar === filtroSAR
-)
-
 .sort((a,b) =>
 ordenFechaAsc
 ? new Date(a.fecha) - new Date(b.fecha)
@@ -765,30 +755,6 @@ function ordenarFecha(){
 ordenFechaAsc = !ordenFechaAsc;
 
 renderTabla();
-
-}
-function filtrarSAR(){
-
-let opciones = [
-"Todos",
-...new Set(eventos.map(e=>e.sar))
-];
-
-let seleccion = prompt(
-"Selecciona SAR:\n\n" +
-opciones.join("\n")
-);
-
-if(
-seleccion &&
-opciones.includes(seleccion)
-){
-
-filtroSAR = seleccion;
-
-renderTabla();
-
-}
 
 }
   
