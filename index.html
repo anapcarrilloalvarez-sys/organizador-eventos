@@ -252,7 +252,7 @@ Filtrar por SAR
 </div>
 
 <hr style="margin:6px 0;">
-<input id="buscarSAR" type="text" placeholder="🔍 Buscar..." style="width:100%;box-sizing:border-box;padding:6px;margin-bottom:10px;">
+<input id="buscarSAR" type="text" oninput="actualizarListaSAR()" placeholder="🔍 Buscar..." style="width:100%;box-sizing:border-box;padding:6px;margin-bottom:10px;">
 
 <label style="display:flex;align-items:center;gap:6px;">
 <input type="checkbox" checked style="width:auto;margin:0;">
@@ -807,18 +807,17 @@ ordenFechaAsc = !ordenFechaAsc;
 renderTabla();
 
 }
-function toggleFiltroSAR(){
+function actualizarListaSAR(){
 
-let panel =
-document.getElementById("filtroSARPanel");
 let lista =
 document.getElementById("listaSAR");
 
-lista.innerHTML = "";
 let textoBusqueda =
 document.getElementById("buscarSAR")
 .value
 .toLowerCase();
+
+lista.innerHTML = "";
 
 let sars =
 [...new Set(
@@ -840,6 +839,12 @@ ${sar}
 
 });
 
+}
+function toggleFiltroSAR(){
+
+let panel =
+document.getElementById("filtroSARPanel");
+actualizarListaSAR();
 panel.style.display =
 panel.style.display === "block"
 ? "none"
