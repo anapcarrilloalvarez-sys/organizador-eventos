@@ -207,7 +207,45 @@ Detalle de Eventos
 <button class="create-btn" onclick="abrirModal()">
 + Create
 </button>
+<div id="filtroSARPanel"
+style="
+display:none;
+background:white;
+border:1px solid #ccc;
+padding:10px;
+width:250px;
+margin-bottom:10px;
+">
 
+<input
+type="text"
+placeholder="🔍 Buscar..."
+style="width:100%;margin-bottom:8px;">
+
+<label><input type="checkbox" checked> Todos</label>
+
+<br>
+
+<label><input type="checkbox"> Rodrigo Malaga</label>
+
+<br>
+
+<label><input type="checkbox"> Bertha Bonilla</label>
+
+<br>
+
+<label><input type="checkbox"> Jessica Molina</label>
+
+<br>
+
+<label><input type="checkbox"> Carlos Barba</label>
+
+<br><br>
+
+<button>Aplicar</button>
+<button>Limpiar</button>
+
+</div>
 <table>
 <thead>
 <tr>
@@ -218,7 +256,7 @@ Fecha ▲▼
 </th>
 <th rowspan="2">Clasificación</th>
 <th rowspan="2">Speaker</th>
-<th rowspan="2">SAR Responsable</th>
+<th rowspan="2" style="position:relative;"><span onclick="toggleFiltroSAR()" style="cursor:pointer;">SAR Responsable ▼</span><div id="filtroSARPanel" style="display:none;position:absolute;background:white;border:1px solid #ccc;padding:10px;width:220px;z-index:1000;text-align:left;"><input type="text" placeholder="🔍 Buscar..." style="width:100%;margin-bottom:8px;"><label><input type="checkbox" checked> Todos</label><br><label><input type="checkbox"> Rodrigo Malaga</label><br><label><input type="checkbox"> Bertha Bonilla</label><br><label><input type="checkbox"> Jessica Molina</label><br><label><input type="checkbox"> Carlos Barba</label><br><br><button>Aplicar</button> <button>Limpiar</button></div></th>
 <th rowspan="2">Avance</th>
 
 <th colspan="5" style="background:#dbeafe">
@@ -757,7 +795,17 @@ ordenFechaAsc = !ordenFechaAsc;
 renderTabla();
 
 }
-  
+function toggleFiltroSAR(){
+
+let panel =
+document.getElementById("filtroSARPanel");
+
+panel.style.display =
+panel.style.display === "block"
+? "none"
+: "block";
+
+}  
 function editarEvento(index){
 eventoEditando = index;
 let e = eventos[index];
