@@ -247,23 +247,26 @@ z-index:9999;
 box-shadow:0 2px 8px rgba(0,0,0,.2);
 text-align:left;
 ">
+<div style="font-weight:bold;margin-bottom:8px;">
+Filtrar por SAR
+</div>
 
-<input type="text" placeholder="🔍 Buscar..." style="width:100%;margin-bottom:8px;">
+<hr style="margin:6px 0;">
+<input type="text" placeholder="🔍 Buscar..." style="width:100%;box-sizing:border-box;padding:6px;margin-bottom:10px;">
 
-<label><input type="checkbox" checked> Todos</label>
-
-<br>
+<label style="display:flex;align-items:center;gap:6px;">
+<input type="checkbox" checked style="width:auto;margin:0;">
+Todos
+</label>
 
 <div id="listaSAR">
 </div>
 
-<br>
-
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
 <button>Aplicar</button>
-
 <button>Limpiar</button>
-
 <button onclick="toggleFiltroSAR()">Cancelar</button>
+</div>
 
 </div>
 
