@@ -474,7 +474,49 @@ ${meses[mesActual]} ${anioActual}
 <button onclick="cambiarMes(1)">▶</button>
 </div>
 `;
+[
+"Lun","Mar","Mié",
+"Jue","Vie","Sáb","Dom"
+].forEach(dia=>{
 
+let header =
+document.createElement("div");
+
+header.style.fontWeight="bold";
+header.style.textAlign="center";
+header.style.background="#f8fafc";
+header.style.padding="10px";
+
+header.innerText = dia;
+
+calendario.appendChild(header);
+
+});
+
+let primerDia =
+new Date(
+anioActual,
+mesActual,
+1
+).getDay();
+
+primerDia =
+primerDia === 0
+? 6
+: primerDia - 1;
+
+for(let i=0;i<primerDia;i++){
+
+let vacio =
+document.createElement("div");
+
+vacio.className="day";
+
+vacio.style.visibility="hidden";
+
+calendario.appendChild(vacio);
+
+}
 let diasMes =
 new Date(anioActual,mesActual+1,0).getDate();
 
