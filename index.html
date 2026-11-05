@@ -218,7 +218,41 @@ Fecha ▲▼
 </th>
 <th rowspan="2">Clasificación</th>
 <th rowspan="2">Speaker</th>
-<th rowspan="2">SAR Responsable</th>
+<th rowspan="2" style="position:relative;overflow:visible;">
+
+SAR Responsable
+
+<span
+onclick="toggleFiltroSAR()"
+style="
+cursor:pointer;
+margin-left:4px;
+font-size:12px;
+"
+>
+▼
+</span>
+
+<div id="filtroSARPanel"
+style="
+display:none;
+position:absolute;
+left:100%;
+top:0;
+background:white;
+border:1px solid #ccc;
+padding:10px;
+width:260px;
+z-index:9999;
+box-shadow:0 2px 8px rgba(0,0,0,.2);
+text-align:left;
+">
+
+FILTRO SAR
+
+</div>
+
+</th>
 <th rowspan="2">Avance</th>
 
 <th colspan="5" style="background:#dbeafe">
@@ -753,6 +787,17 @@ function ordenarFecha(){
 ordenFechaAsc = !ordenFechaAsc;
 
 renderTabla();
+
+}
+function toggleFiltroSAR(){
+
+let panel =
+document.getElementById("filtroSARPanel");
+
+panel.style.display =
+panel.style.display === "block"
+? "none"
+: "block";
 
 }
 function editarEvento(index){
