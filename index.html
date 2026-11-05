@@ -833,11 +833,19 @@ document
 cb.checked = false;
 
 });
+let todos =
+document.querySelector(
+"#filtroSARPanel input[type='checkbox']"
+);
 
+if(todos){
+
+todos.checked = true;
+
+}
 renderTabla();
 
-toggleFiltroSAR();
-
+actualizarListaSAR();
 }
 function aplicarFiltroSAR(){
 
