@@ -811,6 +811,25 @@ function toggleFiltroSAR(){
 
 let panel =
 document.getElementById("filtroSARPanel");
+let lista =
+document.getElementById("listaSAR");
+
+lista.innerHTML = "";
+let sars =
+[...new Set(
+eventos.map(e => e.sar)
+)];
+
+sars.forEach(sar=>{
+
+lista.innerHTML += `
+<label style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+<input type="checkbox" style="width:auto;margin:0;">
+${sar}
+</label>
+`;
+
+});
 
 panel.style.display =
 panel.style.display === "block"
