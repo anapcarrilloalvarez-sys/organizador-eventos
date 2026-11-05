@@ -252,7 +252,7 @@ Filtrar por SAR
 </div>
 
 <hr style="margin:6px 0;">
-<input type="text" placeholder="🔍 Buscar..." style="width:100%;box-sizing:border-box;padding:6px;margin-bottom:10px;">
+<input id="buscarSAR" type="text" placeholder="🔍 Buscar..." style="width:100%;box-sizing:border-box;padding:6px;margin-bottom:10px;">
 
 <label style="display:flex;align-items:center;gap:6px;">
 <input type="checkbox" checked style="width:auto;margin:0;">
@@ -815,10 +815,19 @@ let lista =
 document.getElementById("listaSAR");
 
 lista.innerHTML = "";
+let textoBusqueda =
+document.getElementById("buscarSAR")
+.value
+.toLowerCase();
+
 let sars =
 [...new Set(
 eventos.map(e => e.sar)
-)];
+)]
+.filter(sar =>
+sar.toLowerCase()
+.includes(textoBusqueda)
+);
 
 sars.forEach(sar=>{
 
