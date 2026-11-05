@@ -263,7 +263,7 @@ Todos
 </div>
 
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
-<button>Aplicar</button>
+<button onclick="aplicarFiltroSAR()">Aplicar</button>
 <button>Limpiar</button>
 <button onclick="toggleFiltroSAR()">Cancelar</button>
 </div>
@@ -347,6 +347,7 @@ localStorage.getItem("eventosAna")
 );
 let eventoEditando = null;
 let ordenFechaAsc = true;
+let filtroSARSeleccionados = [];
 let mesActual = new Date().getMonth();
 let anioActual = new Date().getFullYear();
 function guardarLocal(){
@@ -395,11 +396,23 @@ function renderTabla(){
 let html="";
 
 eventos
+
+.filter(e =>
+
+filtroSARSeleccionados.length === 0
+
+||
+
+filtroSARSeleccionados.includes(e.sar)
+
+)
+
 .sort((a,b) =>
 ordenFechaAsc
 ? new Date(a.fecha) - new Date(b.fecha)
 : new Date(b.fecha) - new Date(a.fecha)
 )
+
 .forEach((e,index)=>{
 let docs = e.documentos || {};
 
@@ -807,6 +820,25 @@ ordenFechaAsc = !ordenFechaAsc;
 renderTabla();
 
 }
+function aplicarFiltroSAR(){
+
+filtroSARSeleccionados = [];
+
+document
+.querySelectorAll("#listaSAR input[type='checkbox']:checked")
+.forEach(cb => {
+
+filtroSARSeleccionados.push(
+cb.value
+);
+
+});
+
+renderTabla();
+
+toggleFiltroSAR();
+
+}
 function actualizarListaSAR(){
 
 let lista =
@@ -832,7 +864,7 @@ sars.forEach(sar=>{
 
 lista.innerHTML += `
 <label style="display:flex;align-items:center;gap:6px;margin-top:4px;">
-<input type="checkbox" style="width:auto;margin:0;">
+<input type="checkbox" value="${sar}" style="width:auto;margin:0;">
 ${sar}
 </label>
 `;
