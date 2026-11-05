@@ -264,7 +264,7 @@ Todos
 
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
 <button onclick="aplicarFiltroSAR()">Aplicar</button>
-<button>Limpiar</button>
+<button onclick="limpiarFiltroSAR()">Limpiar</button>
 <button onclick="toggleFiltroSAR()">Cancelar</button>
 </div>
 
@@ -818,6 +818,25 @@ function ordenarFecha(){
 ordenFechaAsc = !ordenFechaAsc;
 
 renderTabla();
+
+}
+function limpiarFiltroSAR(){
+
+filtroSARSeleccionados = [];
+
+document.getElementById("buscarSAR").value = "";
+
+document
+.querySelectorAll("#listaSAR input[type='checkbox']")
+.forEach(cb => {
+
+cb.checked = false;
+
+});
+
+renderTabla();
+
+toggleFiltroSAR();
 
 }
 function aplicarFiltroSAR(){
