@@ -217,7 +217,64 @@ Detalle de Eventos
 Fecha ▲▼
 </th>
 <th rowspan="2">Clasificación</th>
-<th rowspan="2">Speaker</th>
+<th rowspan="2" style="position:relative;overflow:visible;">
+
+Speaker
+
+<span
+onclick="toggleFiltroSpeaker()"
+style="
+cursor:pointer;
+margin-left:4px;
+font-size:12px;
+"
+>
+▼
+</span>
+
+<div id="filtroSpeakerPanel"
+style="
+display:none;
+position:absolute;
+left:100%;
+top:0;
+background:white;
+border:1px solid #ccc;
+padding:10px;
+width:260px;
+z-index:9999;
+box-shadow:0 2px 8px rgba(0,0,0,.2);
+text-align:left;
+">
+
+<div style="font-weight:bold;margin-bottom:8px;">
+Filtrar por Speaker
+</div>
+
+<hr style="margin:6px 0;">
+
+<input id="buscarSpeaker"
+type="text"
+placeholder="🔍 Buscar..."
+style="width:100%;box-sizing:border-box;padding:6px;margin-bottom:10px;">
+
+<label style="display:flex;align-items:center;gap:6px;">
+<input type="checkbox" checked style="width:auto;margin:0;">
+Todos
+</label>
+
+<div id="listaSpeaker">
+</div>
+
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+<button>Aplicar</button>
+<button>Limpiar</button>
+<button onclick="toggleFiltroSpeaker()">Cancelar</button>
+</div>
+
+</div>
+
+</th>
 <th rowspan="2" style="position:relative;overflow:visible;">
 
 SAR Responsable
@@ -348,6 +405,7 @@ localStorage.getItem("eventosAna")
 let eventoEditando = null;
 let ordenFechaAsc = true;
 let filtroSARSeleccionados = [];
+let filtroSpeakerSeleccionados = [];
 let mesActual = new Date().getMonth();
 let anioActual = new Date().getFullYear();
 function guardarLocal(){
@@ -904,6 +962,53 @@ function toggleFiltroSAR(){
 let panel =
 document.getElementById("filtroSARPanel");
 actualizarListaSAR();
+panel.style.display =
+panel.style.display === "block"
+? "none"
+: "block";
+
+}
+
+function actualizarListaSpeaker(){
+
+let lista =
+document.getElementById("listaSpeaker");
+
+let textoBusqueda =
+document.getElementById("buscarSpeaker")
+.value
+.toLowerCase();
+
+lista.innerHTML = "";
+
+let speakers =
+[...new Set(
+eventos.map(e => e.speaker)
+)]
+.filter(speaker =>
+speaker.toLowerCase()
+.includes(textoBusqueda)
+);
+
+speakers.forEach(speaker=>{
+
+lista.innerHTML += `
+<label style="display:flex;align-items:center;gap:6px;margin-top:4px;">
+<input type="checkbox" value="${speaker}" style="width:auto;margin:0;">
+${speaker}
+</label>
+`;
+
+});
+
+}
+function toggleFiltroSpeaker(){
+
+let panel =
+document.getElementById("filtroSpeakerPanel");
+
+actualizarListaSpeaker();
+
 panel.style.display =
 panel.style.display === "block"
 ? "none"
